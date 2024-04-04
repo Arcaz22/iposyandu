@@ -9,11 +9,9 @@ import {
 } from 'class-validator';
 
 export class NewUserDTO {
-  @ApiProperty({ example: 'test@gmail.com' })
   @IsEmail()
   email: string;
 
-  @ApiProperty({ example: 'Test1234' })
   @IsString()
   @MinLength(8)
   @MaxLength(32)
@@ -22,18 +20,15 @@ export class NewUserDTO {
   })
   password: string;
 
-  @ApiProperty({ example: 'test' })
   @IsString()
   name: string;
 
-  @ApiProperty({ example: 'test' })
   @IsString()
   username: string;
 
-  @ApiProperty({ example: '085118962476' })
-  @IsNumber()
+  @IsString()
   @Matches(/^[0-9]+$/, {
     message: 'Nomer telepon hanya boleh berisi angka',
   })
-  phone: number;
+  phone: string;
 }

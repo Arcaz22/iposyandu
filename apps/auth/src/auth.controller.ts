@@ -1,13 +1,13 @@
-import { Controller, Get, Inject, UseGuards } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Inject, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { BaseResponses, SharedService, User } from '@app/shared';
 import { Ctx, MessagePattern, Payload, RmqContext } from '@nestjs/microservices';
 import { NewUserDTO } from './dtos/new-user.dto';
 import { ExistingUserDTO } from './dtos/existing-user.dto';
 import { JwtGuard } from './jwt.guard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody } from '@nestjs/swagger';
+import { use } from 'passport';
 
-@ApiTags('auth')
 @Controller()
 export class AuthController {
   constructor(
@@ -21,10 +21,15 @@ export class AuthController {
   async register(@Ctx() context: RmqContext, @Payload() newUser: NewUserDTO) {
     this.sharedService.acknowledgeMessage(context);
 
-    const user = await this.authService.register(newUser);
-    const baseResponse = new BaseResponses<User>(true, 'User berhasil didaftarkan', user);
-    return baseResponse;
-    // return this.authService.register(newUser);
+    try {
+      const user = await this.authService.register(newUser);
+      const baseResponse = new BaseResponses<User>(HttpStatus.CREATED, 'User berhasil didaftarkan', user);
+      return baseResponse;
+    } catch (error) {
+      const baseResponse = new BaseResponses<User>(HttpStatus.BAD_REQUEST, error.message, null);
+      return baseResponse;
+    }
+    
   }
 
   @MessagePattern({ cmd: 'login' })
@@ -34,7 +39,14 @@ export class AuthController {
   ) {
     this.sharedService.acknowledgeMessage(context);
 
-    return this.authService.login(existingUser);
+    try {
+      const user = await this.authService.login(existingUser);
+      const baseResponse = new BaseResponses<User>(HttpStatus.OK, 'Login berhasil', user);
+      return baseResponse;
+    } catch (error) {
+      const baseResponse = new BaseResponses<User>(HttpStatus.UNAUTHORIZED, 'Login gagal', null);
+      return baseResponse;
+    }
   }
 
   @MessagePattern({ cmd: 'verify-jwt' })
