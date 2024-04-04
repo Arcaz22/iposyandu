@@ -1,10 +1,12 @@
+import { HttpStatus } from "@nestjs/common";
+
 export class BaseResponses<T> {
-  success: boolean;
+  statusCode: HttpStatus
   message: string;
   data: T;
 
-  constructor(success: boolean, message: string, data: T) {
-    this.success = success;
+  constructor(statusCode: HttpStatus, message: string, data: T) {
+    this.statusCode = statusCode;
     this.message = message;
     this.data = data;
   }

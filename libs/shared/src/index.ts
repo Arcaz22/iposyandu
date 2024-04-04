@@ -12,6 +12,7 @@ export * from './interfaces/shared.service.interface'
 export * from './interfaces/user-jwt.interface'
 export * from './interfaces/user-request'
 export * from './interfaces/user.repository'
+export * from './interfaces/swagger.interface'
 
 // modules
 export * from './modules/postgres.module'
@@ -27,3 +28,7 @@ export * from './repositories/user.repository'
 
 // services
 export * from './services/shared.service'
+
+// Swagger
+export * from './docs/swagger.config'
+export * from './docs/swagger'

@@ -14,7 +14,7 @@ export class User extends BaseEntityRepository<User>{
 
   @ApiProperty({ description: 'phone User' })
   @Column()
-  phone: number;
+  phone: string;
 
   @ApiProperty({ description: 'Email User' })
   @Column({ unique: true })

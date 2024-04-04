@@ -1,22 +1,19 @@
 import { AuthGuard } from '@app/shared';
 import { Body, Controller, Get, Inject, Post, UseGuards } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { NewUserDTO } from './dtos/auth/new-user.dto';
+import { request } from 'http';
+import { ExistingUserDTO } from './dtos/auth/existing-user.dto';
 
-@Controller()
-export class AppController {
-  constructor(
-    @Inject('AUTH_SERVICE') private readonly authService: ClientProxy,
-    @Inject('BAYI_SERVICE') private readonly bayiService: ClientProxy,
-  ) {}
+@ApiTags('Auth')
+@Controller('auth')
+export class AuthController {
+  constructor( @Inject('AUTH_SERVICE') private readonly authService: ClientProxy ) {}
 
-  @Post('auth/register')
-  async register(
-    @Body('name') name: string,
-    @Body('username') username: string,
-    @Body('phone') phone: number,
-    @Body('email') email: string,
-    @Body('password') password: string,
-  ) {
+  @Post('register')
+  async register( @Body() request: NewUserDTO ) {
+    const { name, username, phone, email, password } = request;
     return this.authService.send(
       {
         cmd: 'register',
@@ -31,11 +28,9 @@ export class AppController {
     );
   }
 
-  @Post('auth/login')
-  async login(
-    @Body('email') email: string,
-    @Body('password') password: string,
-  ) {
+  @Post('login')
+  async login( @Body() request: ExistingUserDTO) {
+    const { email, password } = request;
     return this.authService.send(
       {
         cmd: 'login',
@@ -46,9 +41,16 @@ export class AppController {
       },
     );
   }
+}
+
+@ApiTags('Bayi')
+@Controller('bayi')
+@ApiBearerAuth('JWT')
+export class BayiController {
+  constructor( @Inject('BAYI_SERVICE') private readonly bayiService: ClientProxy ) {}
 
   @UseGuards(AuthGuard)
-  @Get('bayi')
+  @Get()
   async getBayi() {
     return this.bayiService.send(
       {

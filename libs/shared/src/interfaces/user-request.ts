@@ -3,7 +3,7 @@ export interface UserRequest extends Request {
     id: string;
     name: string;
     username: string;
-    phone: number;
+    phone: string;
     email: string;
   }
 }
