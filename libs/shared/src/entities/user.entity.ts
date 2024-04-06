@@ -1,5 +1,5 @@
-import { Column, Entity } from "typeorm";
-import { BaseEntityRepository } from "../repositories/base/base.entity.repository";
+import { Column, Entity, OneToMany } from "typeorm";
+import { BaseEntityRepository } from "./base.entity.repository";
 import { ApiProperty } from "@nestjs/swagger";
 
 @Entity('user')
@@ -21,6 +21,6 @@ export class User extends BaseEntityRepository<User>{
   email: string;
 
   @ApiProperty({ description: 'Password User' })
-  @Column({ select: false })
+  @Column()
   password: string;
 }

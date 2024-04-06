@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
 import { SharedModule } from '@app/shared';
-import { AuthController, BayiController } from './app.controller';
+import { BayiAppController } from './bayi-app.controller';
+import { AuthAppController } from './auth-app.controller';
 
 @Module({
   imports: [
     SharedModule.registerRmq('AUTH_SERVICE', process.env.RABBITMQ_AUTH_QUEUE),
     SharedModule.registerRmq('BAYI_SERVICE', process.env.RABBITMQ_BAYI_QUEUE),
   ],
-  controllers: [AuthController, BayiController],
+  controllers: [
+    AuthAppController,
+    BayiAppController
+  ],
 })
 export class AppModule {}

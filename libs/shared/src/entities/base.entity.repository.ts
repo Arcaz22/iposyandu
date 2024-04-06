@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  Column,
   CreateDateColumn,
+  DeleteDateColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -24,8 +24,8 @@ export class BaseEntityRepository<T> {
   updatedAt: Date;
 
   @ApiProperty({ description: 'Soft Delete Status' })
-  @Column({ type: 'smallint', default: 0 })
-  deletedAt: number;
+  @DeleteDateColumn()
+  deletedAt: Date; 
 
   constructor(entity: Partial<T>) {
     Object.assign(this, entity);
