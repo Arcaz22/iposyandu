@@ -11,7 +11,6 @@ import {
   SharedModule,
   SharedService,
   User, 
-  UsersRepository
 } from '@app/shared';
 
 @Module({
@@ -38,10 +37,6 @@ import {
     {
       provide: 'AuthServiceInterface',
       useClass: AuthService,
-    },
-    {
-      provide: 'UsersRepositoryInterface',
-      useClass: UsersRepository,
     },
     {
       provide: 'SharedServiceInterface',

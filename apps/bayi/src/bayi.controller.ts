@@ -1,19 +1,74 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Inject, Param, Query } from '@nestjs/common';
 import { BayiService } from './bayi.service';
-import { SharedService } from '@app/shared';
-import { Ctx, MessagePattern, RmqContext } from '@nestjs/microservices';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { BaseResponses, Bayi, DataTableResponses, SharedService } from '@app/shared';
+import { Ctx, MessagePattern, Payload, RmqContext } from '@nestjs/microservices';
+import { FilterDTO } from './dtos/filter.dto';
+import { BayiDTO } from './dtos/bayi.dto';
 
 @Controller()
 export class BayiController {
   constructor(
+    @Inject('BayiServiceInterface')
     private readonly bayiService: BayiService,
+    @Inject('SharedServiceInterface')
     private readonly sharedService: SharedService,
   ) {}
 
-  @MessagePattern({ cmd: 'get-bayi' })
-  async getUsers(@Ctx() context: RmqContext) {
+  @MessagePattern({ cmd: 'find-bayi' })
+  async findBayi(@Ctx() context: RmqContext, @Body() filter: FilterDTO) {
     this.sharedService.acknowledgeMessage(context);
-    return this.bayiService.getPresence();
+
+    try {
+      const bayi = await this.bayiService.findBayi(filter);
+      const dataTableResponses = new DataTableResponses<Bayi>(bayi, bayi.length);
+      return dataTableResponses;
+    } catch (error) {
+      const baseResponse = new BaseResponses<Bayi>(HttpStatus.BAD_REQUEST, error.message, null);
+      return baseResponse;
+    }
+  }
+
+  @MessagePattern({ cmd: 'create-bayi' })
+  async createBayi( @Ctx() context: RmqContext, @Body() newBayi: BayiDTO ) {
+    this.sharedService.acknowledgeMessage(context);
+
+    try {
+      const bayi = await this.bayiService.createBayi(newBayi);
+      const baseResponse = new BaseResponses<Bayi>(HttpStatus.CREATED, 'Data bayi berhasil ditambahkan', bayi);
+      return baseResponse;
+    } catch (error) {
+      const baseResponse = new BaseResponses<Bayi>(HttpStatus.BAD_REQUEST, error.message, null);
+      return baseResponse;
+    }
+  
+  }
+
+  @MessagePattern({ cmd: 'update-bayi' })
+  async updateBayi( @Ctx() context: RmqContext, @Body() updateBayi: BayiDTO, @Param('id') id: string ) {
+    this.sharedService.acknowledgeMessage(context);
+
+    try {
+      const bayi = await this.bayiService.updateBayi(id, updateBayi);
+      const baseResponse = new BaseResponses<Bayi>(HttpStatus.OK, 'Data bayi berhasil diupdate', bayi);
+      return baseResponse;
+    } catch (error) {
+      const baseResponse = new BaseResponses<Bayi>(HttpStatus.BAD_REQUEST, error.message, null);
+      return baseResponse;
+    }
+    
+  }
+
+  @MessagePattern({ cmd: 'delete-bayi' })
+  async deleteBayi( @Ctx() context: RmqContext, @Param('id') id: string ) {
+    this.sharedService.acknowledgeMessage(context);
+
+    try {
+      const bayi = await this.bayiService.deleteBayi(id);
+      const baseResponse = new BaseResponses<Bayi>(HttpStatus.OK, 'Data bayi berhasil dihapus');
+      return baseResponse;
+    } catch (error) {
+      const baseResponse = new BaseResponses<Bayi>(HttpStatus.BAD_REQUEST, error.message, null);
+      return baseResponse;
+    }
   }
 }

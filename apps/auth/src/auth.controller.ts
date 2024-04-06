@@ -1,12 +1,10 @@
-import { Controller, Get, HttpStatus, Inject, UseGuards } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Inject, NotFoundException, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { BaseResponses, SharedService, User } from '@app/shared';
 import { Ctx, MessagePattern, Payload, RmqContext } from '@nestjs/microservices';
 import { NewUserDTO } from './dtos/new-user.dto';
 import { ExistingUserDTO } from './dtos/existing-user.dto';
 import { JwtGuard } from './jwt.guard';
-import { ApiBody } from '@nestjs/swagger';
-import { use } from 'passport';
 
 @Controller()
 export class AuthController {
@@ -40,12 +38,18 @@ export class AuthController {
     this.sharedService.acknowledgeMessage(context);
 
     try {
-      const user = await this.authService.login(existingUser);
-      const baseResponse = new BaseResponses<User>(HttpStatus.OK, 'Login berhasil', user);
-      return baseResponse;
+      return await this.authService.login(existingUser);
     } catch (error) {
-      const baseResponse = new BaseResponses<User>(HttpStatus.UNAUTHORIZED, 'Login gagal', null);
-      return baseResponse;
+      if (error instanceof NotFoundException) {
+        const baseResponse = new BaseResponses<User>(HttpStatus.NOT_FOUND, error.message, null);
+        return baseResponse;
+      } else if (error instanceof UnauthorizedException) {
+        const baseResponse = new BaseResponses<User>(HttpStatus.UNAUTHORIZED, error.message, null);
+        return baseResponse;
+      } else {
+        const baseResponse = new BaseResponses<User>(HttpStatus.BAD_REQUEST, error.message, null);
+        return baseResponse;
+      }
     }
   }
 
