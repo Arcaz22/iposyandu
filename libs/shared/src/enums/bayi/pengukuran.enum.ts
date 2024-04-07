@@ -1,0 +1,4 @@
+export enum PengukuranBayiEnum {
+  TERLENTANG = 'PENGUKURAN CARA TERLENTANG',
+  BERDIRI = 'PENGUKURAN CARA BERDIRI',
+}

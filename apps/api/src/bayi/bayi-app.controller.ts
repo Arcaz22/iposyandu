@@ -2,8 +2,8 @@ import { AuthGuard } from "@app/shared";
 import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Query, UseGuards } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
-import { BaseFilterDTO } from "./dtos/base-filter.dto";
-import { BayiDTO } from "./dtos/bayi/bayi.dto";
+import { BaseFilterDTO } from "../dtos/base-filter.dto";
+import { BayiDTO } from "../dtos/bayi/bayi.dto";
 
 @ApiTags('Bayi')
 @Controller('bayi')
