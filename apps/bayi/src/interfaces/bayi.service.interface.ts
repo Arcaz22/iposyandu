@@ -1,4 +1,4 @@
-import { Bayi, User, UserJwt } from "@app/shared";
+import { Bayi } from "@app/shared";
 import { BayiDTO } from "../dtos/bayi.dto";
 import { FilterDTO } from "../dtos/filter.dto";
 

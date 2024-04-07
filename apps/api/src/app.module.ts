@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { SharedModule } from '@app/shared';
-import { BayiAppController } from './bayi-app.controller';
+import { BayiAppController } from './bayi/bayi-app.controller';
 import { AuthAppController } from './auth-app.controller';
+import { BayiPengukuranAppController } from './bayi/bayi-pengukuran-app.controller';
 
 @Module({
   imports: [
@@ -10,7 +11,8 @@ import { AuthAppController } from './auth-app.controller';
   ],
   controllers: [
     AuthAppController,
-    BayiAppController
+    BayiAppController,
+    BayiPengukuranAppController,
   ],
 })
 export class AppModule {}

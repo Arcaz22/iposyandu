@@ -1,8 +1,12 @@
 import { Module } from '@nestjs/common';
 import { BayiController } from './bayi.controller';
 import { BayiService } from './bayi.service';
-import { Bayi, PostgresModule, SharedModule, SharedService } from '@app/shared';
+import { 
+  Bayi, PengukuranBayi, PostgresModule, SharedModule, SharedService 
+} from '@app/shared';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { BayiPengukuranService } from './modules/pengukuran/bayi-pengukuran.service';
+import { BayiPengukuranController } from './modules/pengukuran/bayi-pengukuran.controller';
 
 @Module({
   imports: [
@@ -11,9 +15,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     SharedModule.registerRmq('BAYI_SERVICE', process.env.RABBITMQ_BAYI_QUEUE),
     TypeOrmModule.forFeature([
       Bayi,
+      PengukuranBayi
     ])
   ],
-  controllers: [BayiController],
+  controllers: [
+    BayiController,
+    BayiPengukuranController
+  ],
   providers: [
     {
       provide: 'BayiServiceInterface',
@@ -22,6 +30,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     {
       provide: 'SharedServiceInterface',
       useClass: SharedService,
+    },
+    {
+      provide: 'BayiPengukuranServiceInterface',
+      useClass: BayiPengukuranService,
     }
   ],
 })

@@ -1,9 +1,9 @@
-import { Column, Entity, ManyToOne } from "typeorm";
-import { BaseEntityRepository } from "./base.entity.repository";
+import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
+import { BaseEntityRepository } from "../base.entity.repository";
 import { ApiProperty } from "@nestjs/swagger";
-import { GenderEnum } from "../enums/gender.enum";
-import { GolonganDarahEnum } from "../enums/golongan-darah.enum";
-import { User } from "./user.entity";
+import { GenderEnum } from "../../enums/user/gender.enum";
+import { GolonganDarahEnum } from "../../enums/user/golongan-darah.enum";
+import { PengukuranBayi } from "./bayi-pengukuran.entity";
 
 @Entity()
 export class Bayi extends BaseEntityRepository<Bayi> {
@@ -54,4 +54,7 @@ export class Bayi extends BaseEntityRepository<Bayi> {
   @ApiProperty({ description: 'Nama ayah' })
   @Column()
   ayah_nama: string;
+
+  @OneToMany(() => PengukuranBayi, pengukuran => pengukuran.bayi, { cascade: true })
+  pengukuranBayi: PengukuranBayi[];
 }

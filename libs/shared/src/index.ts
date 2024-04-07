@@ -1,11 +1,13 @@
 // entities
 export * from './entities/base.entity.repository'
 export * from './entities/user.entity'
-export * from './entities/bayi.entity'
+export * from './entities/bayi/bayi.entity'
+export * from './entities/bayi/bayi-pengukuran.entity'
 
 // enums
-export * from './enums/golongan-darah.enum'
-export * from './enums/gender.enum'
+export * from './enums/user/golongan-darah.enum'
+export * from './enums/user/gender.enum'
+export * from './enums/bayi/pengukuran.enum'
 
 // guards
 export * from './guards/auth.guards'
