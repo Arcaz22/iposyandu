@@ -4,6 +4,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { GenderEnum } from "../../enums/user/gender.enum";
 import { GolonganDarahEnum } from "../../enums/user/golongan-darah.enum";
 import { PengukuranBayi } from "./bayi-pengukuran.entity";
+import { ImunisasiBayi } from "./bayi-imunisasi.entity";
 
 @Entity()
 export class Bayi extends BaseEntityRepository<Bayi> {
@@ -57,4 +58,7 @@ export class Bayi extends BaseEntityRepository<Bayi> {
 
   @OneToMany(() => PengukuranBayi, pengukuran => pengukuran.bayi, { cascade: true })
   pengukuranBayi: PengukuranBayi[];
+
+  @OneToMany(() => ImunisasiBayi, imunisasi => imunisasi.bayi)
+  imunisasiBayi: ImunisasiBayi[];
 }

@@ -9,7 +9,7 @@ import { PengukuranBayiDTO } from "../../dtos/bayi-pengukuran.dto";
 export class BayiPengukuranService implements BayiPengukuranServiceInterface{
   constructor(
     @InjectRepository(Bayi) protected readonly bayisRepository: Repository<Bayi>,
-    @InjectRepository(PengukuranBayi) protected readonly pengukuranRepository: Repository<PengukuranBayi>
+    @InjectRepository(PengukuranBayi) protected readonly pengukuranBayiRepository: Repository<PengukuranBayi>
   ) {}
 
   async findBayiById(bayiId: string): Promise<Bayi> {
@@ -22,12 +22,12 @@ export class BayiPengukuranService implements BayiPengukuranServiceInterface{
 
   async addPengukuranBayi(bayiId: string, pengukuran: PengukuranBayiDTO): Promise<PengukuranBayi> {
     const bayi = await this.findBayiById(bayiId);
-    const pengukuranBayi = this.pengukuranRepository.create({ ...pengukuran, bayi });
-    return await this.pengukuranRepository.save(pengukuranBayi);
+    const pengukuranBayi = this.pengukuranBayiRepository.create({ ...pengukuran, bayi });
+    return await this.pengukuranBayiRepository.save(pengukuranBayi);
   }
 
   async findPengukuranBayiById(pengukuranId: string) {
-    const pengukuran = await this.pengukuranRepository.findOne({ where: { id: pengukuranId } });
+    const pengukuran = await this.pengukuranBayiRepository.findOne({ where: { id: pengukuranId } });
     if (!pengukuran) {
       throw new Error('Pengukuran bayi tidak ditemukan');
     }
@@ -36,7 +36,7 @@ export class BayiPengukuranService implements BayiPengukuranServiceInterface{
 
   async updatePengukuranBayi(id: string, pengukuran: PengukuranBayiDTO): Promise<PengukuranBayi> {
     const found = await this.findPengukuranBayiById(id);
-    const updatedPengukuran = this.pengukuranRepository.merge(found, pengukuran);
-    return await this.pengukuranRepository.save(updatedPengukuran);
+    const updatedPengukuran = this.pengukuranBayiRepository.merge(found, pengukuran);
+    return await this.pengukuranBayiRepository.save(updatedPengukuran);
   }
 }

@@ -42,6 +42,7 @@ export class BayiService implements BayiServiceInterface {
     const query = this.bayisRepository
       .createQueryBuilder('bayi')
       .leftJoinAndSelect('bayi.pengukuranBayi', 'pengukuranBayi')
+      .leftJoinAndSelect('bayi.imunisasiBayi', 'imunisasiBayi')
 
     if (search) {
       query.andWhere('LOWER(bayi.nama) LIKE LOWER(:search)', {

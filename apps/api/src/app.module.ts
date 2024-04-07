@@ -3,6 +3,7 @@ import { SharedModule } from '@app/shared';
 import { BayiAppController } from './bayi/bayi-app.controller';
 import { AuthAppController } from './auth-app.controller';
 import { BayiPengukuranAppController } from './bayi/bayi-pengukuran-app.controller';
+import { BayiImunisasiAppController } from './bayi/bayi-imunisasi-app.controller';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { BayiPengukuranAppController } from './bayi/bayi-pengukuran-app.controll
     AuthAppController,
     BayiAppController,
     BayiPengukuranAppController,
+    BayiImunisasiAppController
   ],
 })
 export class AppModule {}
