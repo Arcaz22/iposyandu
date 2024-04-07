@@ -2,13 +2,15 @@ import { Module } from '@nestjs/common';
 import { BayiController } from './bayi.controller';
 import { BayiService } from './bayi.service';
 import { 
-  Bayi, ImunisasiBayi, PengukuranBayi, PostgresModule, SharedModule, SharedService 
+  Bayi, BayiMeninggal, ImunisasiBayi, PengukuranBayi, PostgresModule, SharedModule, SharedService 
 } from '@app/shared';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BayiPengukuranService } from './modules/pengukuran/bayi-pengukuran.service';
 import { BayiPengukuranController } from './modules/pengukuran/bayi-pengukuran.controller';
 import { BayiImunisasiService } from './modules/imunisasi/bayi-imunisasi.service';
 import { BayiImunisasiController } from './modules/imunisasi/bayi-imunisasi.controller';
+import { BayiMeninggalController } from './modules/meninggal/bayi-meninggal.controller';
+import { BayiMeninggalService } from './modules/meninggal/bayi-meninggal.service';
 
 @Module({
   imports: [
@@ -18,13 +20,15 @@ import { BayiImunisasiController } from './modules/imunisasi/bayi-imunisasi.cont
     TypeOrmModule.forFeature([
       Bayi,
       PengukuranBayi,
-      ImunisasiBayi
+      ImunisasiBayi,
+      BayiMeninggal
     ])
   ],
   controllers: [
     BayiController,
     BayiPengukuranController,
-    BayiImunisasiController
+    BayiImunisasiController,
+    BayiMeninggalController
   ],
   providers: [
     {
@@ -42,7 +46,11 @@ import { BayiImunisasiController } from './modules/imunisasi/bayi-imunisasi.cont
     {
       provide: 'BayiImunisasiServiceInterface',
       useClass: BayiImunisasiService,
-    }
+    },
+    {
+      provide: 'BayiMeninggalServiceInterface',
+      useClass: BayiMeninggalService,
+    },
   ],
 })
 export class BayiModule {}

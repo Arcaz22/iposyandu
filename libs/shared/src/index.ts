@@ -4,6 +4,7 @@ export * from './entities/user.entity'
 export * from './entities/bayi/bayi.entity'
 export * from './entities/bayi/bayi-pengukuran.entity'
 export * from './entities/bayi/bayi-imunisasi.entity'
+export * from './entities/bayi/bayi-meninggal.entity'
 
 // enums
 export * from './enums/user/golongan-darah.enum'
