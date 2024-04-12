@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 import { BaseEntityRepository } from "../base.entity.repository";
 import { ApiProperty } from "@nestjs/swagger";
 import { GenderEnum } from "../../enums/user/gender.enum";
-import { GolonganDarahEnum } from "../../enums/user/golongan-darah.enum";
+import { GolonganDarahEnum } from "../../enums/golongan-darah.enum";
 import { PengukuranBayi } from "./bayi-pengukuran.entity";
 import { ImunisasiBayi } from "./bayi-imunisasi.entity";
 import { BayiMeninggal } from "./bayi-meninggal.entity";

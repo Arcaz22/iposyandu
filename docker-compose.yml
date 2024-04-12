@@ -42,6 +42,22 @@ services:
       - /usr/src/app/node_modules
     command: npm run start:dev bayi
 
+  ibu-hamil:
+    build:
+      context: ./
+      dockerfile: ./apps/ibu-hamil/Dockerfile
+    ports:
+      - '7000:7000'
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+      - postgres
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run start:dev ibu-hamil 
+
   api:
     build:
       context: ./
