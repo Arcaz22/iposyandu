@@ -6,6 +6,7 @@ import { BayiPengukuranAppController } from './bayi/bayi-pengukuran-app.controll
 import { BayiImunisasiAppController } from './bayi/bayi-imunisasi-app.controller';
 import { BayiMeninggalAppController } from './bayi/bayi-meninggal.controller';
 import { IbuhamilAppController } from './ibuhamil/ibuhamil-app.controller';
+import { IbuhamilPengukuranAppController } from './ibuhamil/ibuhamil-pengukuran-app.controller';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { IbuhamilAppController } from './ibuhamil/ibuhamil-app.controller';
     BayiPengukuranAppController,
     BayiImunisasiAppController,
     BayiMeninggalAppController,
-    IbuhamilAppController
+    IbuhamilAppController,
+    IbuhamilPengukuranAppController
   ],
 })
 export class AppModule {}

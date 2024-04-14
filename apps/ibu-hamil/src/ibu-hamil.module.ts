@@ -3,6 +3,8 @@ import { IbuHamilController } from './ibu-hamil.controller';
 import { IbuHamilService } from './ibu-hamil.service';
 import { IbuHamil, IbuHamilImunisasi, IbuHamilMeninggal, IbuHamilPengukuran, IbuHamilPersalinan, PostgresModule, SharedModule, SharedService } from '@app/shared';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { IbuhamilPengukuranService } from './modules/pengukuran/ibuhamil-pengukuran.service';
+import { IbuhamilPengukuranController } from './modules/pengukuran/ibuhamil-pengukuran.controller';
 
 @Module({
   imports: [
@@ -17,7 +19,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       IbuHamilMeninggal
     ])
   ],
-  controllers: [IbuHamilController],
+  controllers: [
+    IbuHamilController,
+    IbuhamilPengukuranController
+  ],
   providers: [
     {
       provide: 'IbuhamilServiceInterface',
@@ -27,6 +32,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       provide: 'SharedServiceInterface',
       useClass: SharedService,
     },
+    {
+      provide: 'IbuhamilPengukuranServiceInterface',
+      useClass: IbuhamilPengukuranService,
+    }
   ],
 })
 export class IbuHamilModule {}
