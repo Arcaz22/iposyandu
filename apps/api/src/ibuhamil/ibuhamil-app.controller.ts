@@ -32,8 +32,4 @@ export class IbuhamilAppController {
     return this.ibuhamilService.send({ cmd: 'delete-ibuhamil' }, { id });
   }
 
-  @Get('test')
-  async test() {
-    return this.ibuhamilService.send({ cmd: 'test' }, {})
-  }
 }

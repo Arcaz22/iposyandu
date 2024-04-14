@@ -48,6 +48,7 @@ export class IbuHamilService implements IbuhamilServiceInterface {
     const query = this.ibuhamilRepository
       .createQueryBuilder('ibuhamil')
       .leftJoinAndSelect('ibuhamil.pengukuranIbuHamil', 'pengukuranIbuHamil')
+      .leftJoinAndSelect('ibuhamil.imunisasiIbuHamil', 'imunisasiIbuHamil')
 
     if (search) {
       query.andWhere('LOWER(ibuhamil.nama) LIKE LOWER(:search)', {

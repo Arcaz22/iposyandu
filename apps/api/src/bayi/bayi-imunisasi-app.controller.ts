@@ -14,14 +14,14 @@ export class BayiImunisasiAppController {
   @Post('imunisasi/create/:bayiId')
   async addImunisasiBayi(@Param('bayiId') bayiId: string, @Body() request: ImunisasiBayiDTO) {
     return this.bayiService.send(
-      { cmd: 'add-bayi-imunisasi' }, { ...request },
+      { cmd: 'add-bayi-imunisasi' }, { ...request, bayiId },
     );
   }
 
   @Patch('imunisasi/update/:imunisasiBayiId')
   async updateImunisasiBayi( @Body() request: ImunisasiBayiDTO, @Param('imunisasiBayiId') id: string ) {
     return this.bayiService.send(
-      { cmd: 'update-bayi-imunisasi' }, { ...request },
+      { cmd: 'update-bayi-imunisasi' }, { ...request, id },
     );
   }
 

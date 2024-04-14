@@ -14,7 +14,7 @@ export class BayiMeninggalAppController {
   @Post('meninggal/create/:bayiId')
   async addMeninggalBayi(@Param('bayiId') bayiId: string, @Body() request: BayiMeninggalDTO) {
     return this.bayiService.send(
-      { cmd: 'add-bayi-meninggal' }, { ...request },
+      { cmd: 'add-bayi-meninggal' }, { ...request, bayiId },
     );
   }
 

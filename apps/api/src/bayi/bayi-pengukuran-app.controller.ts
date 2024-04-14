@@ -14,14 +14,14 @@ export class BayiPengukuranAppController {
   @Post('pengukuran/create/:bayiId')
   async addPengkuranBayi(@Param('bayiId') bayiId: string, @Body() request: PengukuranBayiDTO) {
     return this.bayiService.send(
-      { cmd: 'add-bayi-pengukuran' }, { ...request },
+      { cmd: 'add-bayi-pengukuran' }, { ...request, bayiId },
     );
   }
 
   @Patch('pengukuran/update/:pengukuranBayiId')
   async updateBayi( @Body() request: PengukuranBayiDTO, @Param('pengukuranBayiId') id: string ) {
     return this.bayiService.send(
-      { cmd: 'update-bayi-pengukuran' }, { ...request },
+      { cmd: 'update-bayi-pengukuran' }, { ...request, id },
     );
   }
 

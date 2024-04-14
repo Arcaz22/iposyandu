@@ -5,6 +5,8 @@ import { IbuHamil, IbuHamilImunisasi, IbuHamilMeninggal, IbuHamilPengukuran, Ibu
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { IbuhamilPengukuranService } from './modules/pengukuran/ibuhamil-pengukuran.service';
 import { IbuhamilPengukuranController } from './modules/pengukuran/ibuhamil-pengukuran.controller';
+import { IbuhamilImunisasiController } from './modules/imunisasi/ibuhamil-imunisasi.controller';
+import { IbuhamilImunisasiService } from './modules/imunisasi/ibuhamil-imunisasi.service';
 
 @Module({
   imports: [
@@ -21,7 +23,8 @@ import { IbuhamilPengukuranController } from './modules/pengukuran/ibuhamil-peng
   ],
   controllers: [
     IbuHamilController,
-    IbuhamilPengukuranController
+    IbuhamilPengukuranController,
+    IbuhamilImunisasiController,
   ],
   providers: [
     {
@@ -35,6 +38,10 @@ import { IbuhamilPengukuranController } from './modules/pengukuran/ibuhamil-peng
     {
       provide: 'IbuhamilPengukuranServiceInterface',
       useClass: IbuhamilPengukuranService,
+    },
+    {
+      provide: 'IbuhamilImunisasiServiceInterface',
+      useClass: IbuhamilImunisasiService,
     }
   ],
 })
