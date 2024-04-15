@@ -14,12 +14,12 @@ export class IbuhamilPengukuranController {
   ) {}
 
   @MessagePattern({ cmd: 'add-ibuhamil-pengukuran' })
-  async addPengukuranBayi(@Ctx() context: RmqContext,@Param("id") IbuHamilId:string, @Body() pengukuran: IbuHamilPengukuran) {
+  async addPengukuranIbuhamil(@Ctx() context: RmqContext,@Param("id") IbuHamilId:string, @Body() pengukuran: IbuHamilPengukuran) {
     this.sharedService.acknowledgeMessage(context);
 
     try {
       const pengukuranIbuhamil = await this.IbuhamilPengukuranService.addPengukuranIbuhamil(IbuHamilId, pengukuran);
-      const baseResponse = new BaseResponses<IbuHamilPengukuran>(HttpStatus.CREATED, 'Pengukuran bayi berhasil ditambahkan', pengukuranIbuhamil);
+      const baseResponse = new BaseResponses<IbuHamilPengukuran>(HttpStatus.CREATED, 'Pengukuran ibu hamil berhasil ditambahkan', pengukuranIbuhamil);
       return baseResponse;
     } catch (error) {
       const baseResponse = new BaseResponses<IbuHamilPengukuran>(HttpStatus.BAD_REQUEST, error.message, null);
@@ -28,12 +28,12 @@ export class IbuhamilPengukuranController {
   }
 
   @MessagePattern({ cmd: 'update-ibuhamil-pengukuran' })
-  async updatePengukuranBayi(@Ctx() context: RmqContext,@Param("id") pengukuranIbuHamilId:string, @Body() pengukuran: PengukuranIbuhamilDTO) {
+  async updatePengukuranIbuhamil(@Ctx() context: RmqContext,@Param("id") pengukuranIbuHamilId:string, @Body() pengukuran: PengukuranIbuhamilDTO) {
     this.sharedService.acknowledgeMessage(context);
 
     try {
       const updatedPengukuran = await this.IbuhamilPengukuranService.updatePengukuranIbuhamil(pengukuranIbuHamilId, pengukuran);
-      const baseResponse = new BaseResponses<IbuHamilPengukuran>(HttpStatus.OK, 'Pengukuran bayi berhasil diupdate', updatedPengukuran);
+      const baseResponse = new BaseResponses<IbuHamilPengukuran>(HttpStatus.OK, 'Pengukuran Ibu hamil berhasil diupdate', updatedPengukuran);
       return baseResponse;
     } catch (error) {
       const baseResponse = new BaseResponses<IbuHamilPengukuran>(HttpStatus.BAD_REQUEST, error.message, null);

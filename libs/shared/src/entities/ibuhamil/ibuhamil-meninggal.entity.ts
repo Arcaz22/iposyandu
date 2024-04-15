@@ -16,7 +16,7 @@ export class IbuHamilMeninggal {
   @Column()
   tempat: string;
 
-  @ManyToOne(() => IbuHamil, ibuHamil => ibuHamil.persalinanIbuHamil)
+  @ManyToOne(() => IbuHamil, ibuHamil => ibuHamil.ibuHamilMeninggal)
   @JoinColumn({ name: 'ibuHamilId' })
   ibuHamil: IbuHamil;
 }

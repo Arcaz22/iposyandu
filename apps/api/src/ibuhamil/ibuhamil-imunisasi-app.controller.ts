@@ -19,8 +19,8 @@ export class IbuhamilImunisasiAppController {
     );
   }
 
-  @Patch('imunisasi/update/:pengukuranIbuHamilId')
-  async updateImunisasiIbuhamil( @Body() request: IbuhamilImunisasiDTO, @Param('pengukuranIbuHamilId') id: string ) {
+  @Patch('imunisasi/update/:imunisasiIbuHamilId')
+  async updateImunisasiIbuhamil( @Body() request: IbuhamilImunisasiDTO, @Param('imunisasiIbuHamilId') id: string ) {
     return this.ibuhamilService.send(
       { cmd: 'update-ibuhamil-imunisasi' }, { ...request, id },
     );

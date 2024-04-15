@@ -9,7 +9,7 @@ export * from './entities/ibuhamil/ibuhamil.entity'
 export * from './entities/ibuhamil/ibuhamil-pengukuran.entity'
 export * from './entities/ibuhamil/ibuhamil-imunisasi.entity'
 export * from './entities/ibuhamil/ibuhamil-persalinan.entity'
-export * from './entities/ibuhamil/ibuhami-meninggal.entity'
+export * from './entities/ibuhamil/ibuhamil-meninggal.entity'
 
 // enums
 export * from './enums/golongan-darah.enum'

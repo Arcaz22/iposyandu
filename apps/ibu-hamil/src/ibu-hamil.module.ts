@@ -7,6 +7,10 @@ import { IbuhamilPengukuranService } from './modules/pengukuran/ibuhamil-penguku
 import { IbuhamilPengukuranController } from './modules/pengukuran/ibuhamil-pengukuran.controller';
 import { IbuhamilImunisasiController } from './modules/imunisasi/ibuhamil-imunisasi.controller';
 import { IbuhamilImunisasiService } from './modules/imunisasi/ibuhamil-imunisasi.service';
+import { IbuhamilPersalinanService } from './modules/persalinan/ibuhamil-persalinan.service';
+import { IbuhamilPersalinanController } from './modules/persalinan/ibuhamil-persalinan.controller';
+import { IbuhamilMeninggalService } from './modules/meninggal/ibuhamil-meninggal.service';
+import { IbuhamilMeninggalController } from './modules/meninggal/ibuhamil-meninggal.controller';
 
 @Module({
   imports: [
@@ -25,6 +29,8 @@ import { IbuhamilImunisasiService } from './modules/imunisasi/ibuhamil-imunisasi
     IbuHamilController,
     IbuhamilPengukuranController,
     IbuhamilImunisasiController,
+    IbuhamilPersalinanController,
+    IbuhamilMeninggalController
   ],
   providers: [
     {
@@ -42,6 +48,14 @@ import { IbuhamilImunisasiService } from './modules/imunisasi/ibuhamil-imunisasi
     {
       provide: 'IbuhamilImunisasiServiceInterface',
       useClass: IbuhamilImunisasiService,
+    },
+    {
+      provide: 'IbuhamilPersalinanServiceInterface',
+      useClass: IbuhamilPersalinanService,
+    },
+    {
+      provide: 'IbuhamilMeninggalServiceInterface',
+      useClass: IbuhamilMeninggalService,
     }
   ],
 })

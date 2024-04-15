@@ -5,7 +5,7 @@ import { GolonganDarahEnum } from '@app/shared/enums/golongan-darah.enum';
 import { PendidikanEnum } from '@app/shared/enums/ibuhamil/pendidikan.enum';
 import { IbuHamilPengukuran } from './ibuhamil-pengukuran.entity';
 import { IbuHamilImunisasi } from './ibuhamil-imunisasi.entity';
-import { IbuHamilMeninggal } from './ibuhami-meninggal.entity';
+import { IbuHamilMeninggal } from './ibuhamil-meninggal.entity';
 import { IbuHamilPersalinan } from './ibuhamil-persalinan.entity';
 
 @Entity()

@@ -49,6 +49,8 @@ export class IbuHamilService implements IbuhamilServiceInterface {
       .createQueryBuilder('ibuhamil')
       .leftJoinAndSelect('ibuhamil.pengukuranIbuHamil', 'pengukuranIbuHamil')
       .leftJoinAndSelect('ibuhamil.imunisasiIbuHamil', 'imunisasiIbuHamil')
+      .leftJoinAndSelect('ibuhamil.persalinanIbuHamil', 'persalinanIbuHamil')
+      .leftJoinAndSelect('ibuhamil.ibuHamilMeninggal', 'ibuHamilMeninggal')
 
     if (search) {
       query.andWhere('LOWER(ibuhamil.nama) LIKE LOWER(:search)', {
