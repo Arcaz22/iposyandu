@@ -1,0 +1,7 @@
+export enum TempatPersalinanEnum {
+  BIDAN = 'BIDAN',
+  RUMAH_SAKIT = 'RUMAH_SAKIT',
+  PUSKESMAS = 'PUSKESMAS',
+  RUMAH_BERSALIN = 'RUMAH_BERSALIN',
+  LAINNYA = 'LAINNYA',
+}

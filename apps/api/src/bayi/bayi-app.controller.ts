@@ -29,7 +29,7 @@ export class BayiAppController {
   @Patch('update/:id')
   async updateBayi( @Body() request: BayiDTO, @Param('id') id: string ) {
     return this.bayiService.send(
-      { cmd: 'update-bayi' }, { ...request },
+      { cmd: 'update-bayi' }, { ...request, id },
     );
   }
 

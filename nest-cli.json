@@ -45,6 +45,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/bayi/tsconfig.app.json"
       }
+    },
+    "ibu-hamil": {
+      "type": "application",
+      "root": "apps/ibu-hamil",
+      "entryFile": "main",
+      "sourceRoot": "apps/ibu-hamil/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/ibu-hamil/tsconfig.app.json"
+      }
     }
   }
 }
