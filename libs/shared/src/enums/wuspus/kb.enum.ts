@@ -1,0 +1,10 @@
+export enum KBEnum {
+  KONDOM = 'KONDOM',
+  SUNTIK = 'SUNTIK',
+  PIL = 'PIL',
+  IUD = 'IUD',
+  IMPLAN = 'IMPLAN',
+  MOW = 'MOW',
+  MOP = 'MOP',
+  PERGANTIAN_KONTRASEPSI = 'PERGANTIAN KONTRASEPSI',
+}

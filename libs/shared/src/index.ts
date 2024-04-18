@@ -10,6 +10,10 @@ export * from './entities/ibuhamil/ibuhamil-pengukuran.entity'
 export * from './entities/ibuhamil/ibuhamil-imunisasi.entity'
 export * from './entities/ibuhamil/ibuhamil-persalinan.entity'
 export * from './entities/ibuhamil/ibuhamil-meninggal.entity'
+export * from './entities/wuspus/wuspus.entity'
+export * from './entities/wuspus/wuspus-pemeriksaan.entity'
+export * from './entities/wuspus/wuspus-imunisasi.entity'
+export * from './entities/wuspus/wuspus-meninggal.entity'
 
 // enums
 export * from './enums/golongan-darah.enum'
@@ -20,6 +24,9 @@ export * from './enums/ibuhamil/pendidikan.enum'
 export * from './enums/ibuhamil/imunisasi.enum'
 export * from './enums/ibuhamil/penolong-persalinan.enum'
 export * from './enums/ibuhamil/tempat-persalinan.enum'
+export * from './enums/wuspus/jenis-batch.enum'
+export * from './enums/wuspus/kb.enum'
+export * from './enums/wuspus/status-pernikahan.enum'
 
 // guards
 export * from './guards/auth.guards'

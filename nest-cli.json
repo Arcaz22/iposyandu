@@ -54,6 +54,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/ibu-hamil/tsconfig.app.json"
       }
+    },
+    "wuspus": {
+      "type": "application",
+      "root": "apps/wuspus",
+      "entryFile": "main",
+      "sourceRoot": "apps/wuspus/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/wuspus/tsconfig.app.json"
+      }
     }
   }
 }
