@@ -4,7 +4,7 @@ import { Bayi } from "./bayi.entity";
 import { JenisBatchEnum } from "@app/shared/enums/bayi/imunisasi.enum";
 
 @Entity()
-export class ImunisasiBayi {
+export class BayiImunisasi {
   @ApiProperty({ description: 'Id' })
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -17,6 +17,6 @@ export class ImunisasiBayi {
   @Column({ type: 'enum', enum: JenisBatchEnum })
   jenis_batch: JenisBatchEnum;
 
-  @ManyToOne(() => Bayi, bayi => bayi.imunisasiBayi)
+  @ManyToOne(() => Bayi, bayi => bayi.bayiImunisasi)
   bayi: Bayi;
 }

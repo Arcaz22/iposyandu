@@ -1,4 +1,4 @@
-import { Bayi, ImunisasiBayi, PengukuranBayi } from "@app/shared";
+import { Bayi, BayiImunisasi } from "@app/shared";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -9,7 +9,7 @@ import { ImunisasiBayiDTO } from "../../dtos/bayi-imunisasi.dto";
 export class BayiImunisasiService implements BayiImunisasiServiceInterface {
   constructor(
     @InjectRepository(Bayi) protected readonly bayisRepository: Repository<Bayi>,
-    @InjectRepository(ImunisasiBayi) protected readonly imunisasiBayiRepository: Repository<ImunisasiBayi>
+    @InjectRepository(BayiImunisasi) protected readonly imunisasiBayiRepository: Repository<BayiImunisasi>
   ) {}
 
   async findBayiById(bayiId: string): Promise<Bayi>{
@@ -20,13 +20,13 @@ export class BayiImunisasiService implements BayiImunisasiServiceInterface {
      return bayi;
   }
 
-  async addImunisasiBayi(bayiId: string, imunisasi: ImunisasiBayiDTO): Promise<ImunisasiBayi> {
+  async addImunisasiBayi(bayiId: string, imunisasi: ImunisasiBayiDTO): Promise<BayiImunisasi> {
     const bayi = await this.findBayiById(bayiId);
     const newImunisasi = this.imunisasiBayiRepository.create({ ...imunisasi, bayi });
     return await this.imunisasiBayiRepository.save(newImunisasi);
   }
 
-  async findImunisasiBayiById(imunisasiId: string): Promise<ImunisasiBayi>{
+  async findImunisasiBayiById(imunisasiId: string): Promise<BayiImunisasi>{
     const imunisasi = await this.imunisasiBayiRepository.findOne({ where: { id: imunisasiId } });
     if (!imunisasi) {
       throw new Error('Imunisasi bayi tidak ditemukan');
@@ -34,7 +34,7 @@ export class BayiImunisasiService implements BayiImunisasiServiceInterface {
     return imunisasi;
   }
 
-  async updateImunisasiBayi(id: string, imunisasi: ImunisasiBayiDTO): Promise<ImunisasiBayi> {
+  async updateImunisasiBayi(id: string, imunisasi: ImunisasiBayiDTO): Promise<BayiImunisasi> {
     const found = await this.findImunisasiBayiById(id);
     const updatedImunisasi = this.imunisasiBayiRepository.merge(found, imunisasi);
     return await this.imunisasiBayiRepository.save(updatedImunisasi);

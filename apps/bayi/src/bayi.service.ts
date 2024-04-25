@@ -1,4 +1,4 @@
-import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { BayiDTO } from './dtos/bayi.dto';
 import { Bayi } from '@app/shared';
 import { FilterDTO } from './dtos/filter.dto';
@@ -41,8 +41,8 @@ export class BayiService implements BayiServiceInterface {
 
     const query = this.bayisRepository
       .createQueryBuilder('bayi')
-      .leftJoinAndSelect('bayi.pengukuranBayi', 'pengukuranBayi')
-      .leftJoinAndSelect('bayi.imunisasiBayi', 'imunisasiBayi')
+      .leftJoinAndSelect('bayi.bayiPengukuran', 'bayiPengukuran')
+      .leftJoinAndSelect('bayi.bayiImunisasi', 'bayiImunisasi')
       .leftJoinAndSelect('bayi.bayiMeninggal', 'bayiMeninggal')
 
     if (search) {

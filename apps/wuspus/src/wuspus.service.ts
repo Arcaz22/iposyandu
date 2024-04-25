@@ -41,9 +41,9 @@ export class WuspusService implements WuspusServiceInterface {
 
     const query = this.wuspusRepository
       .createQueryBuilder('wuspus')
-      .leftJoinAndSelect('wuspus.wusPusPemeriksaan', 'wusPusPemeriksaan')
-      .leftJoinAndSelect('wuspus.wusPusImunisasi', 'wusPusImunisasi')
-      .leftJoinAndSelect('wuspus.wusPusMeninggal', 'wusPusMeninggal');
+      .leftJoinAndSelect('wuspus.wuspusPemeriksaan', 'wuspusPemeriksaan')
+      .leftJoinAndSelect('wuspus.wuspusImunisasi', 'wuspusImunisasi')
+      .leftJoinAndSelect('wuspus.wuspusMeninggal', 'wuspusMeninggal');
 
     if (search) {
       query.andWhere('LOWER(wuspus.nama) LIKE LOWER(:search)', {
