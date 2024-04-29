@@ -14,6 +14,7 @@ export * from './entities/wuspus/wuspus.entity'
 export * from './entities/wuspus/wuspus-pemeriksaan.entity'
 export * from './entities/wuspus/wuspus-imunisasi.entity'
 export * from './entities/wuspus/wuspus-meninggal.entity'
+export * from './entities/event.entity'
 
 // enums
 export * from './enums/golongan-darah.enum'

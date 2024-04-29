@@ -74,6 +74,22 @@ services:
       - /usr/src/app/node_modules
     command: npm run start:dev wuspus 
 
+  posyandu:
+    build:
+      context: ./
+      dockerfile: ./apps/posyandu/Dockerfile
+    ports:
+      - '9000:9000'
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+      - postgres
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run start:dev posyandu 
+
   api:
     build:
       context: ./
@@ -88,6 +104,7 @@ services:
       - bayi
       - ibu-hamil
       - wuspus
+      - posyandu
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
