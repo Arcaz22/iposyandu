@@ -37,7 +37,9 @@ export class BayiDTO {
   @IsString()
   alamat: string;
 
-  @IsEnum(GolonganDarahEnum)
+  @IsEnum(GolonganDarahEnum, {
+    message: 'Golongan darah yang tersedia: A, B, AB, O',
+  })
   golongan_darah: GolonganDarahEnum;
 
   @IsNumber()

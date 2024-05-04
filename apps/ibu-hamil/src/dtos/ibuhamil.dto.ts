@@ -42,7 +42,9 @@ export class IbuHamilDTO {
   )
   tanggal_lahir: Date;
 
-  @IsEnum(PendidikanEnum)
+  @IsEnum(PendidikanEnum, {
+    message: 'Pendidikan terakhir yang valid: SD, SMP, SMA, D1, D2, D3, S1, S2, S3'
+  })
   pendidikan_terakhir: PendidikanEnum;
 
   @IsString()
@@ -51,7 +53,9 @@ export class IbuHamilDTO {
   @IsString()
   alamat: string;
 
-  @IsEnum(GolonganDarahEnum)
+  @IsEnum(GolonganDarahEnum,
+    { message: 'Golongan darah yang tersedia: A, B, AB, O' }
+  )
   golongan_darah: GolonganDarahEnum;
 
   @IsNumber()
