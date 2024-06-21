@@ -15,6 +15,13 @@ export * from './entities/wuspus/wuspus-pemeriksaan.entity'
 export * from './entities/wuspus/wuspus-imunisasi.entity'
 export * from './entities/wuspus/wuspus-meninggal.entity'
 export * from './entities/event.entity'
+export * from './entities/posyandu/astra_group_bisnis.entity'
+export * from './entities/posyandu/astra_perusahaan.entity'
+export * from './entities/posyandu/desa.entity'
+export * from './entities/posyandu/kabupaten.entity'
+export * from './entities/posyandu/kecamatan.entity'
+export * from './entities/posyandu/posyandu.entity'
+export * from './entities/posyandu/provinsi.entity'
 
 // enums
 export * from './enums/golongan-darah.enum'
@@ -40,6 +47,7 @@ export * from './interfaces/shared.service.interface'
 export * from './interfaces/user-jwt.interface'
 export * from './interfaces/user-request'
 export * from './interfaces/swagger.interface'
+export * from './interfaces/based-excel'
 
 // modules
 export * from './modules/postgres.module'

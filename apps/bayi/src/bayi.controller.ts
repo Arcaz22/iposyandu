@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Inject, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Inject, Param, Query, Res } from '@nestjs/common';
 import { BayiService } from './bayi.service';
 import { BaseResponses, Bayi, DataTableResponses, SharedService } from '@app/shared';
 import { Ctx, MessagePattern, Payload, RmqContext } from '@nestjs/microservices';
@@ -66,6 +66,22 @@ export class BayiController {
       const bayi = await this.bayiService.deleteBayi(id);
       const baseResponse = new BaseResponses<Bayi>(HttpStatus.OK, 'Data bayi berhasil dihapus');
       return baseResponse;
+    } catch (error) {
+      const baseResponse = new BaseResponses<Bayi>(HttpStatus.BAD_REQUEST, error.message, null);
+      return baseResponse;
+    }
+  }
+
+  @MessagePattern({ cmd: 'export-bayi' })
+  async handleExportBayi(
+    @Ctx() context: RmqContext,
+  ) {
+    this.sharedService.acknowledgeMessage(context);
+
+    try {
+      const buffer = await this.bayiService.exportBayi();
+
+      return buffer;
     } catch (error) {
       const baseResponse = new BaseResponses<Bayi>(HttpStatus.BAD_REQUEST, error.message, null);
       return baseResponse;

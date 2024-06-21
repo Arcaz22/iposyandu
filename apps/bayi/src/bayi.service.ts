@@ -1,10 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { BayiDTO } from './dtos/bayi.dto';
-import { Bayi } from '@app/shared';
+import { BasedExcel, Bayi } from '@app/shared';
 import { FilterDTO } from './dtos/filter.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BayiServiceInterface } from './interfaces/bayi.service.interface';
+import { Buffer } from 'buffer';
 
 @Injectable()
 export class BayiService implements BayiServiceInterface {
@@ -75,4 +76,28 @@ export class BayiService implements BayiServiceInterface {
     bayi.deletedAt = new Date();
     await this.bayisRepository.save(bayi);
   }
+
+  async exportBayi(): Promise<Buffer> {
+    try {
+      const basedExcel = new BasedExcel('Laporan');
+
+      const headerRows = [
+        'PEMERINTAH KOTA BANDUNG',
+        'DINAS KESEHATAN',
+        'UPTD PUSKESMAS XYZ',
+      ];
+
+      basedExcel.addHeader(headerRows);
+
+      const buffer = await basedExcel.saveAsBuffer();
+      
+      console.log('Exported data to Excel buffer successfully', BayiService.name);
+      
+      return buffer;
+    } catch (error) {
+      console.log('Failed to export data to Excel buffer', BayiService.name);
+      throw error;
+    }
+  }
+
 }
