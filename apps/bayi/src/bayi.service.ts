@@ -77,27 +77,41 @@ export class BayiService implements BayiServiceInterface {
     await this.bayisRepository.save(bayi);
   }
 
-  async exportBayi(): Promise<Buffer> {
+  async exportBayi(): Promise<any> {
     try {
       const basedExcel = new BasedExcel('Laporan');
-
+  
       const headerRows = [
         'PEMERINTAH KOTA BANDUNG',
         'DINAS KESEHATAN',
         'UPTD PUSKESMAS XYZ',
       ];
-
       basedExcel.addHeader(headerRows);
-
+  
+      const details = [
+        { title: 'Nama Pekerjaan', value: 'Pelayanan Posyandu Kader' },
+        { title: 'Kegiatan / Penyedia', value: 'Bantuan Operasional Kesehatan Puskesmas XYZ' },
+        { title: 'Tanggal Pelaksanaan', value: '1 Januari 2024' },
+        { title: 'Lokasi', value: 'Puskesmas XYZ' },
+        { title: 'Hasil Kunjungan', value: '' }
+      ];
+      basedExcel.addDetails(details);
+  
+      basedExcel.addSpacing();
+  
+      const bayiData = await this.findBayi({ page: 1, pageSize: 10 });
+      basedExcel.addData(bayiData);
+  
+      basedExcel.addOfficerDetails();
+  
       const buffer = await basedExcel.saveAsBuffer();
-      
-      console.log('Exported data to Excel buffer successfully', BayiService.name);
-      
-      return buffer;
+  
+      return buffer.toJSON();
     } catch (error) {
       console.log('Failed to export data to Excel buffer', BayiService.name);
       throw error;
     }
   }
-
+  
+  
 }

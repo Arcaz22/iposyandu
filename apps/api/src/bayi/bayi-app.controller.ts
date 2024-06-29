@@ -5,6 +5,7 @@ import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { BaseFilterDTO } from "../dtos/base-filter.dto";
 import { BayiDTO } from "../dtos/bayi/bayi.dto";
 const fs = require('fs');
+import { firstValueFrom } from 'rxjs';
 
 @ApiTags('Bayi')
 @Controller('bayi')
@@ -44,13 +45,28 @@ export class BayiAppController {
   @Get('export')
   async exportBayi(@Res() res) {
     try {
-      const buffer = await this.bayiService.send(
+      const bufferJSON = await firstValueFrom(this.bayiService.send(
         { cmd: 'export-bayi' }, {},
-      );
-  
+      ));
+
       console.log('Received Excel buffer from service');
 
+      // Convert JSON object back to Buffer
+      const buffer = Buffer.from(bufferJSON.data);
+
+      console.log('Buffer size:', buffer.length);
+      console.log('Buffer content:', buffer);
+
+      // Ensure buffer is valid
+      if (!Buffer.isBuffer(buffer)) {
+        console.error('Received data is not a valid buffer:', buffer);
+        throw new Error('Received data is not a valid buffer');
+      }
+
+      // Optional: Save file for debugging purposes
       fs.writeFileSync('debug-laporan-posyandu.xlsx', buffer);
+
+      // Send file as response
       res.setHeader('Content-Disposition', 'attachment; filename=laporan-posyandu.xlsx');
       res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
       res.send(buffer);

@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
+import { User } from "../user.entity";
 import { Puskesmas } from "./puskesmas.entity";
 import { Desa } from "./desa.entity";
 import { AstraPerusahaan } from "./astra_perusahaan.entity";
@@ -65,4 +66,8 @@ export class Posyandu {
   @ApiProperty({ description: 'Updated At' })
   @Column({ type: 'timestamp', nullable: true })
   updated_at: Date;
+
+  @ApiProperty({ description: 'Users' })
+  @OneToMany(() => User, user => user.posyandu)
+  users: User[];
 }

@@ -3,6 +3,7 @@ import { AuthServiceInterface } from './interfaces/auth.service.interface';
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcrypt';
 import { 
+  Posyandu,
   User,
   UserJwt,
 } from '@app/shared';
@@ -15,6 +16,7 @@ import { Repository } from 'typeorm';
 export class AuthService implements AuthServiceInterface {
   constructor(
     @InjectRepository(User) protected readonly usersRepository: Repository<User>,
+    @InjectRepository(Posyandu) private readonly posyanduRepository: Repository<Posyandu>,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -34,10 +36,18 @@ export class AuthService implements AuthServiceInterface {
   async register(newsUser: Readonly<NewUserDTO>): Promise<User> {
     await this.findByEmail(newsUser);
     const hashedPassword = await this.hashPassword(newsUser.password);
+
+    const posyandu = await this.posyanduRepository.findOne({ where: { id: newsUser.posyanduId } });
+    if (!posyandu) {
+      throw new NotFoundException('Posyandu not found');
+    }
+
     const user = this.usersRepository.create({
       ...newsUser,
       password: hashedPassword,
+      posyandu,
     });
+
     const savedUser = await this.usersRepository.save(user);
     delete user.password;
     return savedUser;

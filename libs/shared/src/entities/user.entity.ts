@@ -1,6 +1,7 @@
-import { Column, Entity, OneToMany } from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
 import { BaseEntityRepository } from "./base.entity.repository";
 import { ApiProperty } from "@nestjs/swagger";
+import { Posyandu } from "./posyandu/posyandu.entity";
 
 @Entity('user')
 export class User extends BaseEntityRepository<User>{
@@ -23,4 +24,7 @@ export class User extends BaseEntityRepository<User>{
   @ApiProperty({ description: 'Password User' })
   @Column()
   password: string;
+
+  @ManyToOne(() => Posyandu, posyandu => posyandu.users, { nullable: true })
+  posyandu: Posyandu;
 }

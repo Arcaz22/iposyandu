@@ -15,4 +15,7 @@ export class NewUserDTO {
 
   @ApiProperty({ example: '085118962476' })
   phone: string;
+
+  @ApiProperty({ example: '000ff5ff-67de-40ae-9b1b-295afd5a0447' })
+  posyanduId: string;
 }

@@ -11,9 +11,9 @@ export class AuthAppController {
 
   @Post('register')
   async register( @Body() request: NewUserDTO ) {
-    const { name, username, phone, email, password } = request;
+    const { name, username, phone, email, password, posyanduId } = request;
     return this.authService.send(
-      { cmd: 'register' }, { name, username, phone, email, password },
+      { cmd: 'register' }, { name, username, phone, email, password, posyanduId },
     );
   }
 
