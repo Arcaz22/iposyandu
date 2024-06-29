@@ -3,6 +3,7 @@ import {
   IsEmail,
   IsNumber,
   IsString,
+  IsUUID,
   Matches,
   MaxLength,
   MinLength,
@@ -31,4 +32,7 @@ export class NewUserDTO {
     message: 'Nomer telepon hanya boleh berisi angka',
   })
   phone: string;
+
+  @IsUUID()
+  posyanduId: string;
 }

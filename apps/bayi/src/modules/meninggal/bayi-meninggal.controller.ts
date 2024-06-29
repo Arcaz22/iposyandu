@@ -1,5 +1,5 @@
 import { Body, Controller, HttpStatus, Inject, Param } from '@nestjs/common';
-import { BaseResponses, BayiMeninggal, ImunisasiBayi, SharedService } from '@app/shared';
+import { BaseResponses, BayiMeninggal, SharedService } from '@app/shared';
 import { Ctx, MessagePattern, RmqContext } from '@nestjs/microservices';
 import { BayiMeninggalService } from './bayi-meninggal.service';
 import { BayiMeninggalDTO } from '../../dtos/bayi-meninggal.dto';

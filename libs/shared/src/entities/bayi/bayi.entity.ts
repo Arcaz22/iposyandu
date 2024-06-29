@@ -3,8 +3,8 @@ import { BaseEntityRepository } from "../base.entity.repository";
 import { ApiProperty } from "@nestjs/swagger";
 import { GenderEnum } from "../../enums/user/gender.enum";
 import { GolonganDarahEnum } from "../../enums/golongan-darah.enum";
-import { PengukuranBayi } from "./bayi-pengukuran.entity";
-import { ImunisasiBayi } from "./bayi-imunisasi.entity";
+import { BayiPengukuran } from "./bayi-pengukuran.entity";
+import { BayiImunisasi } from "./bayi-imunisasi.entity";
 import { BayiMeninggal } from "./bayi-meninggal.entity";
 
 @Entity()
@@ -57,11 +57,11 @@ export class Bayi extends BaseEntityRepository<Bayi> {
   @Column()
   ayah_nama: string;
 
-  @OneToMany(() => PengukuranBayi, pengukuran => pengukuran.bayi, { cascade: true })
-  pengukuranBayi: PengukuranBayi[];
+  @OneToMany(() => BayiPengukuran, pengukuran => pengukuran.bayi, { cascade: true })
+  bayiPengukuran: BayiPengukuran[];
 
-  @OneToMany(() => ImunisasiBayi, imunisasi => imunisasi.bayi)
-  imunisasiBayi: ImunisasiBayi[];
+  @OneToMany(() => BayiImunisasi, imunisasi => imunisasi.bayi)
+  bayiImunisasi: BayiImunisasi[];
 
   @OneToMany(() => BayiMeninggal, meninggal => meninggal.bayi)
   bayiMeninggal: BayiMeninggal[];

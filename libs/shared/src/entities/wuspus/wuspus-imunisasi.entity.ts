@@ -17,7 +17,7 @@ export class WuspusImunisasi {
   @Column({ type: 'enum', enum: JenisBatchWuspusEnum })
   jenis_batch: JenisBatchWuspusEnum;
 
-  @ManyToOne(() => Wuspus, wuspus => wuspus.wusPusImunisasi)
-  @JoinColumn({ name: 'wusPusId' })
+  @ManyToOne(() => Wuspus, wuspus => wuspus.wuspusImunisasi)
+  @JoinColumn({ name: 'wuspusId' })
   wuspus: Wuspus;
 }

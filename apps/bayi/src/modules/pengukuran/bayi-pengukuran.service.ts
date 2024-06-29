@@ -1,4 +1,4 @@
-import { Bayi, PengukuranBayi } from "@app/shared";
+import { Bayi, BayiPengukuran } from "@app/shared";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -9,7 +9,7 @@ import { PengukuranBayiDTO } from "../../dtos/bayi-pengukuran.dto";
 export class BayiPengukuranService implements BayiPengukuranServiceInterface{
   constructor(
     @InjectRepository(Bayi) protected readonly bayisRepository: Repository<Bayi>,
-    @InjectRepository(PengukuranBayi) protected readonly pengukuranBayiRepository: Repository<PengukuranBayi>
+    @InjectRepository(BayiPengukuran) protected readonly pengukuranBayiRepository: Repository<BayiPengukuran>
   ) {}
 
   async findBayiById(bayiId: string): Promise<Bayi> {
@@ -20,7 +20,7 @@ export class BayiPengukuranService implements BayiPengukuranServiceInterface{
      return bayi;
   }
 
-  async addPengukuranBayi(bayiId: string, pengukuran: PengukuranBayiDTO): Promise<PengukuranBayi> {
+  async addPengukuranBayi(bayiId: string, pengukuran: PengukuranBayiDTO): Promise<BayiPengukuran> {
     const bayi = await this.findBayiById(bayiId);
     const pengukuranBayi = this.pengukuranBayiRepository.create({ ...pengukuran, bayi });
     return await this.pengukuranBayiRepository.save(pengukuranBayi);
@@ -34,7 +34,7 @@ export class BayiPengukuranService implements BayiPengukuranServiceInterface{
     return pengukuran;
   }
 
-  async updatePengukuranBayi(id: string, pengukuran: PengukuranBayiDTO): Promise<PengukuranBayi> {
+  async updatePengukuranBayi(id: string, pengukuran: PengukuranBayiDTO): Promise<BayiPengukuran> {
     const found = await this.findPengukuranBayiById(id);
     const updatedPengukuran = this.pengukuranBayiRepository.merge(found, pengukuran);
     return await this.pengukuranBayiRepository.save(updatedPengukuran);

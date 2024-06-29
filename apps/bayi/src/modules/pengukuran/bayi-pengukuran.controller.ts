@@ -1,5 +1,5 @@
 import { Body, Controller, HttpStatus, Inject, Param, Query } from '@nestjs/common';
-import { BaseResponses, Bayi, PengukuranBayi, SharedService } from '@app/shared';
+import { BaseResponses, BayiPengukuran, SharedService } from '@app/shared';
 import { Ctx, MessagePattern, RmqContext } from '@nestjs/microservices';
 import { BayiPengukuranService } from './bayi-pengukuran.service';
 import { PengukuranBayiDTO } from '../../dtos/bayi-pengukuran.dto';
@@ -19,10 +19,10 @@ export class BayiPengukuranController {
 
     try {
       const pengukuranBayi = await this.bayiPengukuranService.addPengukuranBayi(bayiId, pengukuran);
-      const baseResponse = new BaseResponses<PengukuranBayi>(HttpStatus.CREATED, 'Pengukuran bayi berhasil ditambahkan', pengukuranBayi);
+      const baseResponse = new BaseResponses<BayiPengukuran>(HttpStatus.CREATED, 'Pengukuran bayi berhasil ditambahkan', pengukuranBayi);
       return baseResponse;
     } catch (error) {
-      const baseResponse = new BaseResponses<PengukuranBayi>(HttpStatus.BAD_REQUEST, error.message, null);
+      const baseResponse = new BaseResponses<BayiPengukuran>(HttpStatus.BAD_REQUEST, error.message, null);
       return baseResponse;
     }
   }
@@ -33,10 +33,10 @@ export class BayiPengukuranController {
 
     try {
       const updatedPengukuran = await this.bayiPengukuranService.updatePengukuranBayi(pengukuranBayiId, pengukuran);
-      const baseResponse = new BaseResponses<PengukuranBayi>(HttpStatus.OK, 'Pengukuran bayi berhasil diupdate', updatedPengukuran);
+      const baseResponse = new BaseResponses<BayiPengukuran>(HttpStatus.OK, 'Pengukuran bayi berhasil diupdate', updatedPengukuran);
       return baseResponse;
     } catch (error) {
-      const baseResponse = new BaseResponses<PengukuranBayi>(HttpStatus.BAD_REQUEST, error.message, null);
+      const baseResponse = new BaseResponses<BayiPengukuran>(HttpStatus.BAD_REQUEST, error.message, null);
       return baseResponse;
     }
   }

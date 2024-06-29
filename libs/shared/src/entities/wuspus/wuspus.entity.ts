@@ -24,11 +24,11 @@ export class Wuspus extends BaseEntityRepository<Wuspus> {
   status_pernikahan: StatusPernikahanEnum
 
   @OneToMany(() => WuspusPemeriksaan, pemeriksaan => pemeriksaan.wuspus, { cascade: true })
-  wusPusPemeriksaan: WuspusPemeriksaan[];
+  wuspusPemeriksaan: WuspusPemeriksaan[];
 
   @OneToMany(() => WuspusImunisasi, imunisasi => imunisasi.wuspus)
-  wusPusImunisasi: WuspusImunisasi[];
+  wuspusImunisasi: WuspusImunisasi[];
 
   @OneToMany(() => WuspusMeninggal, meninggal => meninggal.wuspus)
-  wusPusMeninggal: WuspusMeninggal[];
+  wuspusMeninggal: WuspusMeninggal[];
 }

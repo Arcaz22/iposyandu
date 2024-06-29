@@ -1,5 +1,5 @@
 import { Body, Controller, HttpStatus, Inject, Param } from '@nestjs/common';
-import { BaseResponses, ImunisasiBayi, SharedService } from '@app/shared';
+import { BaseResponses, BayiImunisasi, SharedService } from '@app/shared';
 import { Ctx, MessagePattern, RmqContext } from '@nestjs/microservices';
 import { BayiImunisasiService } from './bayi-imunisasi.service';
 import { ImunisasiBayiDTO } from '../../dtos/bayi-imunisasi.dto';
@@ -19,10 +19,10 @@ export class BayiImunisasiController {
 
     try {
       const imunisasiBayi = await this.bayiImunisasiService.addImunisasiBayi(bayiId, imunisasi);
-      const baseResponse = new BaseResponses<ImunisasiBayi>(HttpStatus.CREATED, 'Imunisasi bayi berhasil ditambahkan', imunisasiBayi);
+      const baseResponse = new BaseResponses<BayiImunisasi>(HttpStatus.CREATED, 'Imunisasi bayi berhasil ditambahkan', imunisasiBayi);
       return baseResponse;
     } catch (error) {
-      const baseResponse = new BaseResponses<ImunisasiBayi>(HttpStatus.BAD_REQUEST, error.message, null);
+      const baseResponse = new BaseResponses<BayiImunisasi>(HttpStatus.BAD_REQUEST, error.message, null);
       return baseResponse;
     }
   }
@@ -33,10 +33,10 @@ export class BayiImunisasiController {
 
     try {
       const updatedImunisasi = await this.bayiImunisasiService.updateImunisasiBayi(imunisasiBayiId, imunisasi);
-      const baseResponse = new BaseResponses<ImunisasiBayi>(HttpStatus.OK, 'Imunisasi bayi berhasil diupdate', updatedImunisasi);
+      const baseResponse = new BaseResponses<BayiImunisasi>(HttpStatus.OK, 'Imunisasi bayi berhasil diupdate', updatedImunisasi);
       return baseResponse;
     } catch (error) {
-      const baseResponse = new BaseResponses<ImunisasiBayi>(HttpStatus.BAD_REQUEST, error.message, null);
+      const baseResponse = new BaseResponses<BayiImunisasi>(HttpStatus.BAD_REQUEST, error.message, null);
       return baseResponse;
     }
   }

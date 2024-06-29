@@ -63,6 +63,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/wuspus/tsconfig.app.json"
       }
+    },
+    "posyandu": {
+      "type": "application",
+      "root": "apps/posyandu",
+      "entryFile": "main",
+      "sourceRoot": "apps/posyandu/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/posyandu/tsconfig.app.json"
+      }
     }
   }
 }

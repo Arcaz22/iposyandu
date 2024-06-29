@@ -16,7 +16,7 @@ export class WuspusMeninggal {
     @Column()
     tempat: string;
 
-    @ManyToOne(() => Wuspus, wuspus => wuspus.wusPusMeninggal)
-    @JoinColumn({ name: 'wusPusId' })
+    @ManyToOne(() => Wuspus, wuspus => wuspus.wuspusMeninggal)
+    @JoinColumn({ name: 'wuspusId' })
     wuspus: Wuspus;
 }

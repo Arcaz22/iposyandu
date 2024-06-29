@@ -15,6 +15,8 @@ export class PengukuranBayiDTO {
   tinggi_badan: number;
 
   @IsOptional()
-  @IsEnum(PengukuranBayiEnum, { message: 'Cara pengukuran tidak valid' })
+  @IsEnum(PengukuranBayiEnum, { 
+    message: 'Cara pengukuran yang tersedia: PENGUKURAN CARA TERLENTANG, PENGUKURAN CARA BERDIRI' 
+  })
   cara_pengukuran: PengukuranBayiEnum;
 }

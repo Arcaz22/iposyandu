@@ -20,7 +20,6 @@ export class IbuHamilController {
 
     try {
       const ibuhamil = await this.ibuhamilService.findIbuhamil(filter);
-      console.log(ibuhamil)
       const dataTableResponses = new DataTableResponses<IbuHamil>(ibuhamil, ibuhamil.length);
       return dataTableResponses;
     } catch (error) {

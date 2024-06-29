@@ -7,10 +7,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtGuard } from './jwt.guard';
 import { JwtStrategy } from './jwt-strategy';
 import { 
+  AstraGrupBisnis,
+  AstraPerusahaan,
+  Desa,
+  Kabupaten,
+  Kecamatan,
   PostgresModule,
+  Posyandu,
+  Provinsi,
+  Puskesmas,
   SharedModule,
   SharedService,
-  User, 
+  User,
 } from '@app/shared';
 
 @Module({
@@ -28,6 +36,14 @@ import {
 
     TypeOrmModule.forFeature([
       User,
+      Posyandu,
+      Puskesmas,
+      Kecamatan,
+      Kabupaten,
+      Desa,
+      Provinsi,
+      AstraGrupBisnis,
+      AstraPerusahaan
     ]),
   ],
   controllers: [AuthController],

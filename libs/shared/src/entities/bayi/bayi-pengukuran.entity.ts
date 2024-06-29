@@ -4,7 +4,7 @@ import { Bayi } from "./bayi.entity";
 import { PengukuranBayiEnum } from "@app/shared/enums/bayi/pengukuran.enum";
 
 @Entity()
-export class PengukuranBayi {
+export class BayiPengukuran {
   @ApiProperty({ description: 'Id' })
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -25,7 +25,7 @@ export class PengukuranBayi {
   @Column({ type: 'enum', enum: PengukuranBayiEnum })
   cara_pengukuran: PengukuranBayiEnum;
 
-  @ManyToOne(() => Bayi, bayi => bayi.pengukuranBayi)
+  @ManyToOne(() => Bayi, bayi => bayi.bayiPengukuran)
   @JoinColumn({ name: 'bayiId' })
   bayi: Bayi;
 }
