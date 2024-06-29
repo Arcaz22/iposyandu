@@ -1,30 +1,42 @@
-import { Entity, Column, OneToMany, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { ApiProperty } from '@nestjs/swagger';
-import { Posyandu } from './posyandu.entity';
-import { AstraGrupBisnis } from './astra_group_bisnis.entity';
+import { ApiProperty } from "@nestjs/swagger";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
+import { AstraGrupBisnis } from "./astra_group_bisnis.entity";
+import { Posyandu } from "./posyandu.entity";
 
-@Entity({ name: 'astra_perusahaans' })
+@Entity('astra_perusahaans')
 export class AstraPerusahaan {
   @ApiProperty({ description: 'Id' })
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 255, nullable: false })
-  @ApiProperty({ description: 'Nama Perusahaan' })
+  @ApiProperty({ description: 'Astra Grup Bisnis Id' })
+  @ManyToOne(() => AstraGrupBisnis, grupBisnis => grupBisnis.astra_perusahaans)
+  astra_grup_bisnis: AstraGrupBisnis;
+
+  @ApiProperty({ description: 'Nama' })
+  @Column({ length: 255 })
   nama: string;
 
-  @Column({ type: 'int', default: 0 })
   @ApiProperty({ description: 'Jumlah Binaan' })
-  jumlahBinaan: number;
+  @Column({ default: 0 })
+  jumlah_binaan: number;
 
-  @Column({ type: 'bigint', nullable: true })
-  @ApiProperty({ description: 'Sumber Tabel ID' })
-  sumberTabelId: number;
+  @ApiProperty({ description: 'Sumber Tabel Id' })
+  @Column({ nullable: true })
+  sumber_tabel_id: number;
 
-  @ManyToOne(() => AstraGrupBisnis, (grupBisnis) => grupBisnis.perusahaans)
-  @ApiProperty({ description: 'Grup Bisnis' })
-  astraGrupBisnis: AstraGrupBisnis;
-  
-  @OneToMany(() => Posyandu, (posyandu) => posyandu.astraPerusahaan)
-  posyandu: Posyandu[];
+  @ApiProperty({ description: 'Deleted At' })
+  @Column({ type: 'timestamp', nullable: true })
+  deleted_at: Date;
+
+  @ApiProperty({ description: 'Created At' })
+  @Column({ type: 'timestamp', nullable: true })
+  created_at: Date;
+
+  @ApiProperty({ description: 'Updated At' })
+  @Column({ type: 'timestamp', nullable: true })
+  updated_at: Date;
+
+  @OneToMany(() => Posyandu, posyandu => posyandu.astra_perusahaan)
+  posyandus: Posyandu[];
 }

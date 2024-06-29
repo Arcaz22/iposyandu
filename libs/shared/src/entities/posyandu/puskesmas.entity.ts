@@ -1,20 +1,21 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { AstraPerusahaan } from "./astra_perusahaan.entity";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
+import { Kecamatan } from "./kecamatan.entity";
+import { Posyandu } from "./posyandu.entity";
 
-@Entity('astra_grup_bisnis')
-export class AstraGrupBisnis {
+@Entity('puskesmas')
+export class Puskesmas {
   @ApiProperty({ description: 'Id' })
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @ApiProperty({ description: 'Kecamatan Id' })
+  @ManyToOne(() => Kecamatan, kecamatan => kecamatan.puskesmas)
+  kecamatan: Kecamatan;
+
   @ApiProperty({ description: 'Nama' })
   @Column({ length: 255 })
   nama: string;
-
-  @ApiProperty({ description: 'Jumlah Binaan' })
-  @Column({ default: 0 })
-  jumlah_binaan: number;
 
   @ApiProperty({ description: 'Sumber Tabel Id' })
   @Column({ nullable: true })
@@ -32,6 +33,6 @@ export class AstraGrupBisnis {
   @Column({ type: 'timestamp', nullable: true })
   updated_at: Date;
 
-  @OneToMany(() => AstraPerusahaan, perusahaan => perusahaan.astra_grup_bisnis)
-  astra_perusahaans: AstraPerusahaan[];
+  @OneToMany(() => Posyandu, posyandu => posyandu.puskesmas)
+  posyandus: Posyandu[];
 }

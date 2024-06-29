@@ -22,6 +22,7 @@ export * from './entities/posyandu/kabupaten.entity'
 export * from './entities/posyandu/kecamatan.entity'
 export * from './entities/posyandu/posyandu.entity'
 export * from './entities/posyandu/provinsi.entity'
+export * from './entities/posyandu/puskesmas.entity'
 
 // enums
 export * from './enums/golongan-darah.enum'

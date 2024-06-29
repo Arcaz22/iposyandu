@@ -4,6 +4,7 @@ import { ClientProxy } from "@nestjs/microservices";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { BaseFilterDTO } from "../dtos/base-filter.dto";
 import { BayiDTO } from "../dtos/bayi/bayi.dto";
+const fs = require('fs');
 
 @ApiTags('Bayi')
 @Controller('bayi')
@@ -49,6 +50,7 @@ export class BayiAppController {
   
       console.log('Received Excel buffer from service');
 
+      fs.writeFileSync('debug-laporan-posyandu.xlsx', buffer);
       res.setHeader('Content-Disposition', 'attachment; filename=laporan-posyandu.xlsx');
       res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
       res.send(buffer);

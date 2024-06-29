@@ -1,29 +1,42 @@
-import { Provinsi } from './provinsi.entity';
-import { Entity, Column, OneToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { ApiProperty } from '@nestjs/swagger';
-import { Kecamatan } from './kecamatan.entity';
+import { ApiProperty } from "@nestjs/swagger";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
+import { Provinsi } from "./provinsi.entity";
+import { Kecamatan } from "./kecamatan.entity";
 
-@Entity({ name: 'kabupatens' })
+@Entity('kabupatens')
 export class Kabupaten {
   @ApiProperty({ description: 'Id' })
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ApiProperty({ description: 'Kode Kabupaten' })
-  @Column({ length: 255, nullable: false })
+  @ApiProperty({ description: 'Provinsi Id' })
+  @ManyToOne(() => Provinsi, provinsi => provinsi.kabupatens)
+  provinsi: Provinsi;
+
+  @ApiProperty({ description: 'Kode' })
+  @Column({ length: 255 })
   kode: string;
 
-  @ApiProperty({ description: 'Nama Kabupaten' })
-  @Column({ length: 255, nullable: false })
+  @ApiProperty({ description: 'Nama' })
+  @Column({ length: 255 })
   nama: string;
 
   @ApiProperty({ description: 'Sumber Tabel Id' })
-  @Column('bigint', { nullable: true })
-  sumberTabelId: number;
+  @Column({ nullable: true })
+  sumber_tabel_id: number;
 
-  @OneToMany(() => Provinsi, provinsi => provinsi.kabupaten)
-  provinsi: Provinsi[];
+  @ApiProperty({ description: 'Deleted At' })
+  @Column({ type: 'timestamp', nullable: true })
+  deleted_at: Date;
 
-  @ManyToOne(() => Kecamatan, kecamatan => kecamatan.kabupaten)
-  kecamatan: Kecamatan;
+  @ApiProperty({ description: 'Created At' })
+  @Column({ type: 'timestamp', nullable: true })
+  created_at: Date;
+
+  @ApiProperty({ description: 'Updated At' })
+  @Column({ type: 'timestamp', nullable: true })
+  updated_at: Date;
+
+  @OneToMany(() => Kecamatan, kecamatan => kecamatan.kabupaten)
+  kecamatans: Kecamatan[];
 }
