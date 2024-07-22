@@ -23,6 +23,14 @@ export class Wuspus extends BaseEntityRepository<Wuspus> {
   })
   status_pernikahan: StatusPernikahanEnum
 
+  @ApiProperty({ description: 'Nama Pasangan' })
+  @Column({ nullable: true })
+  nama_pasangan: string;
+
+  @ApiProperty({ description: 'Tanggal Lahir Pasangan' })
+  @Column({ nullable: true })
+  tanggal_lahir_pasangan: Date;
+
   @OneToMany(() => WuspusPemeriksaan, pemeriksaan => pemeriksaan.wuspus, { cascade: true })
   wuspusPemeriksaan: WuspusPemeriksaan[];
 

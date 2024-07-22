@@ -82,17 +82,16 @@ export class BayiService implements BayiServiceInterface {
       const basedExcel = new BasedExcel('Laporan');
   
       const headerRows = [
-        'PEMERINTAH KOTA BANDUNG',
-        'DINAS KESEHATAN',
-        'UPTD PUSKESMAS XYZ',
+        'LAPORAN KEGIATAN POSYANDU XYZ',
+        'TAHUN 2024',
       ];
       basedExcel.addHeader(headerRows);
   
       const details = [
         { title: 'Nama Pekerjaan', value: 'Pelayanan Posyandu Kader' },
-        { title: 'Kegiatan / Penyedia', value: 'Bantuan Operasional Kesehatan Puskesmas XYZ' },
+        { title: 'Kegiatan / Penyedia', value: 'Bantuan Operasional Kesehatan Posyandu XYZ' },
         { title: 'Tanggal Pelaksanaan', value: '1 Januari 2024' },
-        { title: 'Lokasi', value: 'Puskesmas XYZ' },
+        { title: 'Lokasi', value: 'Posyandu XYZ' },
         { title: 'Hasil Kunjungan', value: '' }
       ];
       basedExcel.addDetails(details);
