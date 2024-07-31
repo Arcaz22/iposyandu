@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Inject, Param, Query, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Inject, Param, Query, Request, Res } from '@nestjs/common';
 import { BayiService } from './bayi.service';
 import { BaseResponses, Bayi, DataTableResponses, SharedService } from '@app/shared';
 import { Ctx, MessagePattern, Payload, RmqContext } from '@nestjs/microservices';
@@ -29,11 +29,13 @@ export class BayiController {
   }
 
   @MessagePattern({ cmd: 'create-bayi' })
-  async createBayi( @Ctx() context: RmqContext, @Body() newBayi: BayiDTO ) {
+  async createBayi(@Ctx() context: RmqContext, @Body() newBayi: BayiDTO & { userId: string }) {
     this.sharedService.acknowledgeMessage(context);
 
     try {
-      const bayi = await this.bayiService.createBayi(newBayi);
+      const bayiDataWithUserId = { ...newBayi, userId: newBayi.userId };
+
+      const bayi = await this.bayiService.createBayi(bayiDataWithUserId);
       const baseResponse = new BaseResponses<Bayi>(HttpStatus.CREATED, 'Data bayi berhasil ditambahkan', bayi);
       return baseResponse;
     } catch (error) {
