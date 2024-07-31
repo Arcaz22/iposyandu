@@ -2,7 +2,10 @@ import { Module } from '@nestjs/common';
 import { BayiController } from './bayi.controller';
 import { BayiService } from './bayi.service';
 import { 
-  Bayi, BayiImunisasi, BayiMeninggal, BayiPengukuran, PostgresModule, SharedModule, SharedService 
+  AstraGrupBisnis,
+  AstraPerusahaan,
+  Bayi, BayiImunisasi, BayiMeninggal, BayiPengukuran, Desa, Kabupaten, Kecamatan, PostgresModule, Posyandu, Provinsi, Puskesmas, SharedModule, SharedService, 
+  User
 } from '@app/shared';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BayiPengukuranService } from './modules/pengukuran/bayi-pengukuran.service';
@@ -21,7 +24,16 @@ import { BayiMeninggalService } from './modules/meninggal/bayi-meninggal.service
       Bayi,
       BayiPengukuran,
       BayiImunisasi,
-      BayiMeninggal
+      BayiMeninggal,
+      User,
+      Posyandu,
+      Puskesmas,
+      Kecamatan,
+      Provinsi,
+      Desa,
+      Kabupaten,
+      AstraPerusahaan,
+      AstraGrupBisnis
     ])
   ],
   controllers: [

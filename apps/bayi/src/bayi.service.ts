@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { BayiDTO } from './dtos/bayi.dto';
-import { BasedExcel, Bayi } from '@app/shared';
+import { BasedExcel, Bayi, User } from '@app/shared';
 import { FilterDTO } from './dtos/filter.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -11,6 +11,7 @@ import { Buffer } from 'buffer';
 export class BayiService implements BayiServiceInterface {
   constructor(
     @InjectRepository(Bayi) protected readonly bayisRepository: Repository<Bayi>,
+    @InjectRepository(User) protected readonly usersRepository: Repository<User>,
   ) {}
 
   async findByName(bayiDTO: Readonly<BayiDTO>): Promise<void> {
@@ -22,9 +23,16 @@ export class BayiService implements BayiServiceInterface {
     }
   }
 
-  async createBayi(newBayi: Readonly<BayiDTO>): Promise<Bayi> {
+  async createBayi(newBayi: Readonly<BayiDTO & { userId: string }>): Promise<Bayi> {
     await this.findByName(newBayi);
-    const bayi = this.bayisRepository.create({ ...newBayi });
+
+    // Pastikan user dengan userId ada
+    const user = await this.usersRepository.findOne({ where: { id: newBayi.userId } });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const bayi = this.bayisRepository.create({ ...newBayi, user });
     return this.bayisRepository.save(bayi);
   }
 
@@ -45,6 +53,8 @@ export class BayiService implements BayiServiceInterface {
       .leftJoinAndSelect('bayi.bayiPengukuran', 'bayiPengukuran')
       .leftJoinAndSelect('bayi.bayiImunisasi', 'bayiImunisasi')
       .leftJoinAndSelect('bayi.bayiMeninggal', 'bayiMeninggal')
+      .leftJoinAndSelect('bayi.user', 'user')
+      .leftJoinAndSelect('user.posyandu', 'posyandu');
 
     if (search) {
       query.andWhere('LOWER(bayi.nama) LIKE LOWER(:search)', {
@@ -79,39 +89,48 @@ export class BayiService implements BayiServiceInterface {
 
   async exportBayi(): Promise<any> {
     try {
-      const basedExcel = new BasedExcel('Laporan');
+      const bayiData = await this.findBayi({ page: 1, pageSize: 10 });
+      if (bayiData.length === 0) {
+        throw new Error('No bayi data found');
+      }
   
+      const validBayi = bayiData.find(b => b.user && b.user.posyandu);
+      if (!validBayi) {
+        throw new Error('No bayi with valid user and posyandu found');
+      }
+  
+      const posyanduName = validBayi.user.posyandu.nama;
+  
+      const today = new Date();
+      const day = today.getDate();
+      const month = today.toLocaleString('default', { month: 'long' });
+      const year = today.getFullYear();
+      const formattedDate = `${day} ${month} ${year}`;
+  
+      const basedExcel = new BasedExcel('Laporan');
       const headerRows = [
-        'PEMERINTAH KOTA BANDUNG',
-        'DINAS KESEHATAN',
-        'UPTD PUSKESMAS XYZ',
+        `LAPORAN KEGIATAN POSYANDU ${posyanduName.toUpperCase()}`,
+        `TAHUN ${year}`,
       ];
       basedExcel.addHeader(headerRows);
   
       const details = [
         { title: 'Nama Pekerjaan', value: 'Pelayanan Posyandu Kader' },
-        { title: 'Kegiatan / Penyedia', value: 'Bantuan Operasional Kesehatan Puskesmas XYZ' },
-        { title: 'Tanggal Pelaksanaan', value: '1 Januari 2024' },
-        { title: 'Lokasi', value: 'Puskesmas XYZ' },
+        { title: 'Kegiatan / Penyedia', value: `Bantuan Operasional Kesehatan ${posyanduName}` },
+        { title: 'Tanggal Pelaksanaan', value: formattedDate },
+        { title: 'Lokasi', value: `Posyandu ${posyanduName}` },
         { title: 'Hasil Kunjungan', value: '' }
       ];
       basedExcel.addDetails(details);
   
       basedExcel.addSpacing();
-  
-      const bayiData = await this.findBayi({ page: 1, pageSize: 10 });
       basedExcel.addData(bayiData);
-  
       basedExcel.addOfficerDetails();
   
       const buffer = await basedExcel.saveAsBuffer();
-  
       return buffer.toJSON();
     } catch (error) {
-      console.log('Failed to export data to Excel buffer', BayiService.name);
       throw error;
-    }
+    } 
   }
-  
-  
 }

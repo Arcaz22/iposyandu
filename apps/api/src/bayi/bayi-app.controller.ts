@@ -1,11 +1,12 @@
 import { AuthGuard } from "@app/shared";
-import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Query, Res, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Query, Req, Res, UseGuards } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { BaseFilterDTO } from "../dtos/base-filter.dto";
 import { BayiDTO } from "../dtos/bayi/bayi.dto";
 const fs = require('fs');
 import { firstValueFrom } from 'rxjs';
+import * as jwt from 'jsonwebtoken';
 
 @ApiTags('Bayi')
 @Controller('bayi')
@@ -22,9 +23,21 @@ export class BayiAppController {
   }
 
   @Post('create')
-  async createBayi( @Body() request: BayiDTO ) {
+  async createBayi(@Req() req, @Body() request: BayiDTO) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader.split(' ')[1];
+    const decoded = jwt.decode(token);
+
+    if (!decoded) {
+      console.error('Invalid token');
+      throw new Error('Invalid token');
+    }
+
+    const userId = decoded.sub;
+    const bayiDataWithUserId = { ...request, userId };
+
     return this.bayiService.send(
-      { cmd: 'create-bayi' }, { ...request },
+      { cmd: 'create-bayi' }, bayiDataWithUserId,
     );
   }
 
@@ -49,29 +62,19 @@ export class BayiAppController {
         { cmd: 'export-bayi' }, {},
       ));
 
-      console.log('Received Excel buffer from service');
-
-      // Convert JSON object back to Buffer
       const buffer = Buffer.from(bufferJSON.data);
 
-      console.log('Buffer size:', buffer.length);
-      console.log('Buffer content:', buffer);
-
-      // Ensure buffer is valid
       if (!Buffer.isBuffer(buffer)) {
         console.error('Received data is not a valid buffer:', buffer);
         throw new Error('Received data is not a valid buffer');
       }
 
-      // Optional: Save file for debugging purposes
       fs.writeFileSync('debug-laporan-posyandu.xlsx', buffer);
 
-      // Send file as response
       res.setHeader('Content-Disposition', 'attachment; filename=laporan-posyandu.xlsx');
       res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
       res.send(buffer);
     } catch (error) {
-      console.error(`Failed to export bayi data: ${error.message}`, error.stack);
       res.status(500).send({ message: 'Failed to export bayi data' });
     }
   }

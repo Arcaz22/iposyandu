@@ -9,6 +9,10 @@ import { JwtStrategy } from './jwt-strategy';
 import { 
   AstraGrupBisnis,
   AstraPerusahaan,
+  Bayi,
+  BayiImunisasi,
+  BayiMeninggal,
+  BayiPengukuran,
   Desa,
   Kabupaten,
   Kecamatan,
@@ -43,7 +47,11 @@ import {
       Desa,
       Provinsi,
       AstraGrupBisnis,
-      AstraPerusahaan
+      AstraPerusahaan,
+      Bayi,
+      BayiImunisasi,
+      BayiPengukuran,
+      BayiMeninggal
     ]),
   ],
   controllers: [AuthController],

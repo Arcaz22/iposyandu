@@ -6,6 +6,7 @@ import { GolonganDarahEnum } from "../../enums/golongan-darah.enum";
 import { BayiPengukuran } from "./bayi-pengukuran.entity";
 import { BayiImunisasi } from "./bayi-imunisasi.entity";
 import { BayiMeninggal } from "./bayi-meninggal.entity";
+import { User } from "../user.entity";
 
 @Entity()
 export class Bayi extends BaseEntityRepository<Bayi> {
@@ -65,4 +66,7 @@ export class Bayi extends BaseEntityRepository<Bayi> {
 
   @OneToMany(() => BayiMeninggal, meninggal => meninggal.bayi)
   bayiMeninggal: BayiMeninggal[];
+
+  @ManyToOne(() => User, user => user.bayi)
+  user: User;
 }

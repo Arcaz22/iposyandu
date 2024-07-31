@@ -1,7 +1,8 @@
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 import { BaseEntityRepository } from "./base.entity.repository";
 import { ApiProperty } from "@nestjs/swagger";
 import { Posyandu } from "./posyandu/posyandu.entity";
+import { Bayi } from "./bayi/bayi.entity";
 
 @Entity('user')
 export class User extends BaseEntityRepository<User>{
@@ -27,4 +28,7 @@ export class User extends BaseEntityRepository<User>{
 
   @ManyToOne(() => Posyandu, posyandu => posyandu.users, { nullable: true })
   posyandu: Posyandu;
+
+  @OneToMany(() => Bayi, bayi => bayi.user)
+  bayi: Bayi[];
 }
